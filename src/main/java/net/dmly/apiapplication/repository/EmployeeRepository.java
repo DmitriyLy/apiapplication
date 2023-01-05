@@ -5,13 +5,13 @@ import net.dmly.apiapplication.model.Employee;
 import java.util.List;
 
 public interface EmployeeRepository {
-    void addEmployee(Employee employee);
+    Employee addEmployee(Employee employee);
 
     List<Employee> getAllEmployees();
 
     Employee findById(Long id);
 
-    void updateEmployee(Employee modifiedEmployee);
+    Employee updateEmployee(Employee modifiedEmployee);
 
     Boolean deleteById(Long id);
 }

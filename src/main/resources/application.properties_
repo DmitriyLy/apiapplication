@@ -1,0 +1,11 @@
+#logging.level.root=debug
+
+server.port=9080
+
+spring.datasource.url=jdbc:postgresql://localhost:5432/apiapplication
+spring.datasource.driver-class-name=org.postgresql.Driver
+spring.datasource.username=dmly
+spring.datasource.password=dmly
+spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.show-sql=true
+spring.jpa.hibernate.ddl-auto=update

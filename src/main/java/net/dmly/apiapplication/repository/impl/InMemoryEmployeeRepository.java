@@ -14,12 +14,14 @@ public class InMemoryEmployeeRepository implements EmployeeRepository {
     static {
         DATABASE.add(new Employee(1L, "John", "Smith", "john@gmail.com"));
         DATABASE.add(new Employee(2L, "Alex", "Total", "alext@gmail.com"));
-        DATABASE.add(new Employee(2L, "David", "Notus", "davidn@gmail.com"));
+        DATABASE.add(new Employee(3L, "David", "Notus", "davidn@gmail.com"));
     }
 
     @Override
-    public void addEmployee(Employee employee){
+    public Employee addEmployee(Employee employee){
+        employee.setId(getNewId());
         DATABASE.add(employee);
+        return employee;
     }
 
     @Override
@@ -36,17 +38,27 @@ public class InMemoryEmployeeRepository implements EmployeeRepository {
     }
 
     @Override
-    public void updateEmployee(Employee modifiedEmployee){
+    public Employee updateEmployee(Employee modifiedEmployee){
         Employee existingEmployee = findById(modifiedEmployee.getId());
 
         DATABASE.remove(existingEmployee);
         DATABASE.add(modifiedEmployee);
 
+        return modifiedEmployee;
     }
 
     @Override
     public Boolean deleteById(Long id){
         DATABASE.remove(findById(id));
         return Boolean.TRUE;
+    }
+
+    //concurrency unsafe
+    private Long getNewId() {
+        return DATABASE
+                .stream()
+                .mapToLong(Employee::getId)
+                .max()
+                .orElse(0L) + 1;
     }
 }
