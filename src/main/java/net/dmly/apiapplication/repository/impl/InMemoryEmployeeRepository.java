@@ -1,13 +1,14 @@
-package net.dmly.apiapplication.repository;
+package net.dmly.apiapplication.repository.impl;
 
 import net.dmly.apiapplication.model.Employee;
+import net.dmly.apiapplication.repository.EmployeeRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class InMemoryEmployeeRepository {
+public class InMemoryEmployeeRepository implements EmployeeRepository {
     private static List<Employee> DATABASE = new ArrayList<>();
 
     static {
@@ -16,22 +17,26 @@ public class InMemoryEmployeeRepository {
         DATABASE.add(new Employee(2L, "David", "Notus", "davidn@gmail.com"));
     }
 
-    void addEmployee(Employee employee){
+    @Override
+    public void addEmployee(Employee employee){
         DATABASE.add(employee);
     }
 
-    List<Employee> getAllEmployees(){
+    @Override
+    public List<Employee> getAllEmployees(){
         return List.copyOf(DATABASE);
     }
 
-    Employee findById(Long id){
+    @Override
+    public Employee findById(Long id){
         return DATABASE.stream()
                 .filter(employee -> id.equals(employee.getId()))
                 .findFirst()
                 .orElseThrow();
     }
 
-    void updateEmployee(Employee modifiedEmployee){
+    @Override
+    public void updateEmployee(Employee modifiedEmployee){
         Employee existingEmployee = findById(modifiedEmployee.getId());
 
         DATABASE.remove(existingEmployee);
@@ -39,7 +44,8 @@ public class InMemoryEmployeeRepository {
 
     }
 
-    Boolean deleteById(Long id){
+    @Override
+    public Boolean deleteById(Long id){
         DATABASE.remove(findById(id));
         return Boolean.TRUE;
     }
