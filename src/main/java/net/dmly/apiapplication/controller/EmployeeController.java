@@ -10,6 +10,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
+import static net.dmly.apiapplication.utils.ControllerUtils.getLocation;
+
 @RestController
 @RequestMapping(path = "/api/employees")
 @RequiredArgsConstructor
@@ -41,14 +43,6 @@ public class EmployeeController {
     @PutMapping
     public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee) {
         return ResponseEntity.ok(employeeService.updateEmployee(employee));
-    }
-
-    private URI getLocation(Long id) {
-        return ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("{id}")
-                .buildAndExpand(id)
-                .toUri();
     }
 
 }
