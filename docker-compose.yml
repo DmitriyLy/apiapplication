@@ -1,0 +1,27 @@
+services:
+  apiapplication:
+    #image: apiapplication-image
+    ports:
+      - 9080:9080
+      - 5005:5005
+    networks:
+      - apiapplication-network
+    build:
+      context: .
+      no_cache: true
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:12-alpine3.17
+    ports:
+      - 5432:5432
+    networks:
+      - apiapplication-network
+    environment:
+      POSTGRES_PASSWORD: "dmly"
+      POSTGRES_USER: "dmly"
+      POSTGRES_DB: "apiapplication"
+
+networks:
+  apiapplication-network:
+    driver: bridge

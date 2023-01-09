@@ -22,7 +22,7 @@ public class ApplicationInitializer implements CommandLineRunner {
         }
 
         if (roleRepository.findByName("USER_ADMIN") == null) {
-            Role roleAdmin = new Role(2L, "456", "USER_ADMIN");
+            Role roleAdmin = new Role(2L, "456", "ROLE_ADMIN");
             roleRepository.save(roleAdmin);
         }
     }
