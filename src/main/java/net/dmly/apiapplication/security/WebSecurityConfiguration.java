@@ -25,16 +25,12 @@ public class WebSecurityConfiguration {
         AuthenticationManagerBuilder authenticationManagerBuilder = httpSecurity.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder.authenticationProvider(authenticationProvider);
 
-        httpSecurity
-                .csrf().disable();
-
-        httpSecurity
+        httpSecurity.csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/accounts/**")
-                .permitAll();
-
-        httpSecurity
-                .authorizeRequests()
+                .permitAll()
+                .antMatchers("/**")
+                .authenticated()
                 .anyRequest()
                 .hasAnyRole("USER", "ADMIN")
                 .and()

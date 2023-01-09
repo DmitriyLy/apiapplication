@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import net.dmly.apiapplication.model.Employee;
 import net.dmly.apiapplication.service.EmployeeService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -29,6 +30,7 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeService.findById(id));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping
     public ResponseEntity<Employee> addEmployee(@RequestBody Employee employee) {
         Employee addedEmployee = employeeService.addEmployee(employee);
